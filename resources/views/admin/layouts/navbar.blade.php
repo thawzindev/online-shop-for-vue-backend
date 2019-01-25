@@ -1,10 +1,12 @@
 <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+  
   <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-    <a class="navbar-brand brand-logo" href="index.html">
+    <a class="navbar-brand brand-logo" href="{{ route('admin.index') }}">
       <img src="assets/images/logo.svg" alt="logo" /> </a>
-    <a class="navbar-brand brand-logo-mini" href="index.html">
+    <a class="navbar-brand brand-logo-mini" href="{{ route('admin.index') }}">
       <img src="assets/images/logo-mini.svg" alt="logo" /> </a>
   </div>
+
   <div class="navbar-menu-wrapper d-flex align-items-center">
     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
       <span class="mdi mdi-menu"></span>
@@ -106,10 +108,13 @@
           <i class="mdi mdi-tune"></i>
         </a>
       </li>
+
+      <!-- Profile nav -->
       <li class="nav-item dropdown d-none d-xl-inline-block">
         <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-          <span class="profile-text">Richard V.Welsh !</span>
-          <img class="img-xs rounded-circle" src="assets/images/faces/face8.jpg" alt="Profile image"> </a>
+          <span class="profile-text">{{ Auth::user()->name }}</span>
+          <img class="img-xs rounded-circle" src="{{ avatar_path(Auth::user()->image) }}" alt="Profile image"> 
+        </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
           <a class="dropdown-item p-0">
             <div class="d-flex border-bottom">
@@ -127,7 +132,16 @@
           <a class="dropdown-item mt-2"> Manage Accounts </a>
           <a class="dropdown-item"> Change Password </a>
           <a class="dropdown-item"> Check Inbox </a>
-          <a class="dropdown-item"> Sign Out </a>
+
+          <!-- Logout -->
+          <a href="{{ route('logout') }}" class="dropdown-item"
+            onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+            {{ __('Sign Out') }}
+          </a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+          </form>
         </div>
       </li>
     </ul>

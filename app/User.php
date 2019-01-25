@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'phone', 'role', 'password'
     ];
 
     /**
@@ -27,4 +27,25 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function isSuperAdmin()
+    {
+        return $this->role == '1' ? true : false;
+    }
+
+    /**
+     * Helper methods.
+     */
+    public function label() 
+    {
+        if ($this->role == '1') return 'danger';
+        if ($this->role == '2') return 'success';
+        if ($this->role == '99') return 'info';
+    }
+
+    public function roleName() 
+    {
+        return collect(config('form.roles'))->firstWhere('value', $this->role)['name'];
+    }
+
 }

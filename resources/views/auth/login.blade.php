@@ -24,7 +24,7 @@
               </div>
 
               @if ($errors->has('email'))
-                <label id="cname-error" class="error mt-2 text-danger" for="email">
+                <label class="error mt-2 text-danger" for="email">
                   {{ $errors->first('email') }}
                 </label>
               @endif
@@ -45,7 +45,7 @@
               </div>
 
               @if ($errors->has('password'))
-                <label id="cname-error" class="error mt-2 text-danger" for="password">
+                <label class="error mt-2 text-danger" for="password">
                   {{ $errors->first('password') }}
                 </label>
               @endif
@@ -73,6 +73,7 @@
             </div> --}}
           </form>
         </div>
+        
         <ul class="auth-footer">
           <li>
             <a href="#">Conditions</a>

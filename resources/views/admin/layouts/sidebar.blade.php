@@ -4,11 +4,11 @@
       <div class="nav-link">
         <div class="user-wrapper">
           <div class="profile-image">
-            <img src="assets/images/faces/face8.jpg" alt="profile image"> </div>
+            <img src="{{ avatar_path(Auth::user()->image) }}" alt="profile image"> </div>
           <div class="text-wrapper">
-            <p class="profile-name">Richard V.Welsh</p>
+            <p class="profile-name">{{ Auth::user()->name }}</p>
             <div>
-              <small class="designation text-muted">Manager</small>
+              <small class="designation text-muted">{{ Auth::user()->roleName() }}</small>
               <span class="status-indicator online"></span>
             </div>
           </div>
