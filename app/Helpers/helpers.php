@@ -74,10 +74,22 @@ if (! function_exists('active_segment')) {
 
 if (! function_exists('active_path')) {
 
-	function active_path($path) 
+	function active_path($path = null) 
 	{
-		//return $path;
+		$path = is_null($path) 
+				? config('app.admin_prefix')
+				: config('app.admin_prefix').'/'.$path;
+
 		return request()->is($path) ? 'active' : '';
+	}
+	
+}
+
+if (! function_exists('show_segment')) {
+
+	function show_segment($index, $path) 
+	{
+		return request()->segment($index) == $path ? 'show' : '';
 	}
 	
 }
