@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateUserRequest;
 
 class UserController extends Controller
 {
@@ -27,7 +28,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        $roles = config('form.roles');
+
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -36,9 +39,13 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        User::create($data);
+
+        return back();
     }
 
     /**
@@ -60,7 +67,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $roles = config('form.roles');
+
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**

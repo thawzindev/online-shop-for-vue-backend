@@ -1,110 +1,107 @@
 @extends('admin.layouts.master')
 
 @section('container')
-<div class="row">
-  <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-    <div class="card card-statistics">
-      <div class="card-body">
-        <div class="clearfix">
-          <div class="float-left">
-            <i class="mdi mdi-cube text-danger icon-lg"></i>
-          </div>
-          <div class="float-right">
-            <p class="mb-0 text-right">Total Revenue</p>
-            <div class="fluid-container">
-              <h3 class="font-weight-medium text-right mb-0">$65,650</h3>
-            </div>
-          </div>
-        </div>
-        <p class="text-muted mt-3 mb-0">
-          <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> 65% lower growth </p>
-      </div>
-    </div>
-  </div>
-  <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-    <div class="card card-statistics">
-      <div class="card-body">
-        <div class="clearfix">
-          <div class="float-left">
-            <i class="mdi mdi-receipt text-warning icon-lg"></i>
-          </div>
-          <div class="float-right">
-            <p class="mb-0 text-right">Orders</p>
-            <div class="fluid-container">
-              <h3 class="font-weight-medium text-right mb-0">3455</h3>
-            </div>
-          </div>
-        </div>
-        <p class="text-muted mt-3 mb-0">
-          <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> Product-wise sales </p>
-      </div>
-    </div>
-  </div>
-  <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-    <div class="card card-statistics">
-      <div class="card-body">
-        <div class="clearfix">
-          <div class="float-left">
-            <i class="mdi mdi-poll-box text-success icon-lg"></i>
-          </div>
-          <div class="float-right">
-            <p class="mb-0 text-right">Sales</p>
-            <div class="fluid-container">
-              <h3 class="font-weight-medium text-right mb-0">5693</h3>
-            </div>
-          </div>
-        </div>
-        <p class="text-muted mt-3 mb-0">
-          <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i> Weekly Sales </p>
-      </div>
-    </div>
-  </div>
-  <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
-    <div class="card card-statistics">
-      <div class="card-body">
-        <div class="clearfix">
-          <div class="float-left">
-            <i class="mdi mdi-account-location text-info icon-lg"></i>
-          </div>
-          <div class="float-right">
-            <p class="mb-0 text-right">Employees</p>
-            <div class="fluid-container">
-              <h3 class="font-weight-medium text-right mb-0">246</h3>
-            </div>
-          </div>
-        </div>
-        <p class="text-muted mt-3 mb-0">
-          <i class="mdi mdi-reload mr-1" aria-hidden="true"></i> Product-wise sales </p>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-12 grid-margin">
+<div class="row grid-margin">
+  <div class="col-lg-12">
     <div class="card">
       <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h2 class="card-title mb-0">Product Analysis</h2>
-          <div class="wrapper d-flex">
-            <div class="d-flex align-items-center mr-3">
-              <span class="dot-indicator bg-success"></span>
-              <p class="mb-0 ml-2 text-muted">Product</p>
-            </div>
-            <div class="d-flex align-items-center">
-              <span class="dot-indicator bg-primary"></span>
-              <p class="mb-0 ml-2 text-muted">Resources</p>
-            </div>
-          </div>
+        <div class="d-flex align-items-center justify-content-between">
+          <h4 class="card-title">Add New User</h4>
+
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="{{ route('admin.index') }}">Dashboard</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="{{ route('admin.users.index') }}">Users</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">Create</li>
+            </ol>
+          </nav>
         </div>
-        <div class="chart-container">
-          <canvas id="dashboard-area-chart" height="80"></canvas>
-        </div>
+
+        <form method="POST" action="{{ route('admin.users.store') }}">
+          @csrf
+
+          <fieldset>
+            <!-- name -->
+            @component('components.textbox')
+              @slot('title', 'Name (required)')  
+              @slot('name', 'name')
+              @slot('placeholder', 'Enter Username')
+              @slot('value', isset($user) ? $user->name : '')
+              @slot('autofocus', 'autofocus')
+              @slot('required', 'required')
+            @endcomponent
+
+            <!-- email -->
+            @component('components.textbox')
+              @slot('type', 'email')
+              @slot('title', 'Email (required)')  
+              @slot('name', 'email')
+              @slot('placeholder', 'Enter Email')
+              @slot('value', isset($user) ? $user->email : '')
+              @slot('required', 'required')
+            @endcomponent
+
+            <!-- phone -->
+            @component('components.textbox')
+              @slot('type', 'phone')
+              @slot('title', 'Phone (required)')  
+              @slot('name', 'phone')
+              @slot('placeholder', 'Enter Phone')
+              @slot('value', isset($user)? $user->phone: '')
+              @slot('required', 'required')
+            @endcomponent
+            
+            <!-- role -->
+            @component('components.selectbox-with-array')
+              @slot('title', 'Role (required)')
+              @slot('name', 'role')
+              @slot('objects', $roles)
+              @slot('selected', '')
+            @endcomponent
+
+            <!-- password -->
+            @component('components.textbox')
+              @slot('type', 'password')
+              @slot('title', 'Password (required)')  
+              @slot('name', 'password')
+              @slot('placeholder', 'Enter Password')
+              @slot('value', '')
+              @slot('required', 'required')
+            @endcomponent
+
+            <!-- confirm password -->
+            @component('components.textbox')
+              @slot('title', 'Confirm Password (required)')  
+              @slot('name', 'password_confirmation')
+              @slot('type', 'password')
+              @slot('placeholder', 'Enter Confirm Password')
+              @slot('value', '')
+              @slot('required', 'required')
+            @endcomponent
+
+            {{-- @component('components.textareabox')
+              @slot('title', 'Address (optional)')
+              @slot('name', 'address')
+              @slot('value', '')
+            @endcomponent --}}
+
+            <input class="btn btn-primary" type="submit" value="Save"> 
+          </fieldset>
+        </form>
       </div>
+      <!-- /.card-body -->
     </div>
+    <!-- /.card -->
   </div>
+  <!-- /.col -->
 </div>
+<!-- /.row -->
 @endsection
 
 @section('custom-js')
-<script src="{{ asset('assets/js/demo_1/dashboard.js') }}"></script>
+
 @endsection
