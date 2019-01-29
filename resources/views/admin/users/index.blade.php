@@ -96,6 +96,12 @@
             <!-- /.table-responsive -->
           </div>
           <!-- /.col -->
+
+          <!-- pagination -->
+          <nav class="col-12 d-flex justify-content-end mt-4">
+            {{ $users->appends($_GET)->links() }}
+          </nav>
+          <!-- /.col -->
         </div>
         <!-- /.row -->
       </div>
