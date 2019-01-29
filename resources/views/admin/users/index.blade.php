@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('plugin-css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/daterangepicker.min.css">
+
 @endsection
 
 @section ('container')
@@ -42,14 +42,16 @@
             <select class="form-control" name="role">
               <option value="">All</option>
               @foreach(config('form.roles') as $role)
-                <option value="{{ $role['value'] }}">{{ $role['name'] }}</option>
+                <option value="{{ $role['value'] }}" {{ request('role') == $role['value'] ? 'selected' : '' }}>
+                  {{ $role['name'] }}
+                </option>
               @endforeach
             </select>
           </div>
 
           <div class="form-group">
             <label for="keyword">Keyword</label>
-            <input type="text" class="form-control form-control-sm" name="keyword">
+            <input type="text" class="form-control form-control-sm" name="keyword" value="{{ request('keyword') }}">
           </div>
           
           <input class="btn btn-success" type="submit" value="Search"> 
@@ -106,19 +108,29 @@
 @endsection
 
 @section('plugin-js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/daterangepicker.min.js"></script>
+
 @endsection
 
 @section('custom-js')
+@php 
+  if (request('date')) {
+    $date = split_daterange(request('date')); 
+  }
+@endphp
+
 <script>
   $(function () {
     // Date range picker
-    var start = moment().startOf('month');
-    var end = moment().endOf('month');
+    @if(request('date'))
+      var start = moment('{{ $date['from'] }}');
+      var end = moment('{{ $date['to'] }}');
+    @else
+      var start = moment().startOf('month');
+      var end = moment().endOf('month');
+    @endif
 
     function cb(start, end) {
-        $('#daterange input').val(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+      $('#daterange input').val(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
     }
 
     $('#daterange').daterangepicker({
@@ -126,6 +138,8 @@
           format: 'YYYY/MM/DD'
       },
 
+      startDate: start,
+      endDate: end,
       ranges: {
         'Today': [moment(), moment()],
         'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -136,18 +150,6 @@
         'This Year': [moment().startOf('year'), moment().endOf('year')],
         'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
       },
-
-      @if(request('date'))
-        startDate: '{{ $date['from'] }}',
-      @else
-        startDate: moment().startOf('month'),
-      @endif
-
-      @if(request('date'))
-        endDate: '{{ $date['to'] }}',
-      @else
-        endDate: moment().endOf('month'),
-      @endif
 
     }, cb); 
 

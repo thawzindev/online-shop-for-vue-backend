@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\User;
+use App\Filters\UserFilter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
@@ -14,9 +15,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(UserFilter $filter)
     {
-        $users = User::paginate();
+        $users = User::filter($filter)->paginate();
 
         return view('admin.users.index', compact('users'));
     }

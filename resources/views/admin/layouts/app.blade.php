@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.addons.css') }}">
     <!-- endinject -->
     <!-- plugin css for this page -->
+    <link rel="stylesheet" href="{{ asset('assets/vendors/daterangepicker/daterangepicker.css') }}">
     @yield('plugin-css')
     <!-- End plugin css for this page -->
     <!-- inject:css -->
@@ -32,6 +33,8 @@
     <script src="{{ asset('assets/vendors/js/vendor.bundle.addons.js') }}"></script>
     <!-- endinject -->
     <!-- Plugin js for this page-->
+    <script src="{{ asset('assets/vendors/daterangepicker/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/daterangepicker/daterangepicker.js') }}"></script>
     @yield('plugin-js')
     <!-- End plugin js for this page-->
     <!-- inject:js -->

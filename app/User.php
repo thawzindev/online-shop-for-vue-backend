@@ -48,4 +48,12 @@ class User extends Authenticatable
         return collect(config('form.roles'))->firstWhere('value', $this->role)['name'];
     }
 
+    /**
+     * Query scope.
+     */
+    public function scopeFilter($query, $filter) 
+    {
+        $filter->apply($query);    
+    }
+
 }
