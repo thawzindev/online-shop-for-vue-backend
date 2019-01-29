@@ -1,5 +1,9 @@
 @extends('admin.layouts.master')
 
+@section('plugin-css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/daterangepicker.min.css">
+@endsection
+
 @section ('container')
 <div class="row">
   <div class="col-12">
@@ -24,7 +28,7 @@
           <!-- date -->
           <div class="form-group">
             <label for="date">Date</label>
-            <div id="datepicker-popup" class="input-group date datepicker">
+            <div id="daterange" class="input-group date datepicker">
               <input type="text" class="form-control form-control-sm" name="date">
               <span class="input-group-addon input-group-append border-left">
                 <span class="mdi mdi-calendar input-group-text"></span>
@@ -101,6 +105,55 @@
 </div>
 @endsection
 
+@section('plugin-js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/daterangepicker.min.js"></script>
+@endsection
+
 @section('custom-js')
-<script src="{{ asset('assets/js/shared/formpickers.js') }}"></script>
+<script>
+  $(function () {
+    // Date range picker
+    var start = moment().startOf('month');
+    var end = moment().endOf('month');
+
+    function cb(start, end) {
+        $('#daterange input').val(start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD'));
+    }
+
+    $('#daterange').daterangepicker({
+      locale: {
+          format: 'YYYY/MM/DD'
+      },
+
+      ranges: {
+        'Today': [moment(), moment()],
+        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+        'This Month': [moment().startOf('month'), moment().endOf('month')],
+        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+        'This Year': [moment().startOf('year'), moment().endOf('year')],
+        'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
+      },
+
+      @if(request('date'))
+        startDate: '{{ $date['from'] }}',
+      @else
+        startDate: moment().startOf('month'),
+      @endif
+
+      @if(request('date'))
+        endDate: '{{ $date['to'] }}',
+      @else
+        endDate: moment().endOf('month'),
+      @endif
+
+    }, cb); 
+
+    cb(start, end); 
+    /** --- end daterangepicker --- */
+
+  });
+</script>
 @endsection
