@@ -33,6 +33,11 @@ class User extends Authenticatable
         return $this->role == '1' ? true : false;
     }
 
+    public function isUser() 
+    {
+        return $this->role == '99' ? true : false;    
+    }
+
     /**
      * Helper methods.
      */

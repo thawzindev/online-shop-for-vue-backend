@@ -7,6 +7,7 @@ use App\Filters\UserFilter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
@@ -43,10 +44,11 @@ class UserController extends Controller
     public function store(CreateUserRequest $request)
     {
         $data = $request->validated();
+        $data['password'] = bcrypt(request('password'));
 
         User::create($data);
 
-        return back();
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -80,9 +82,18 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $data = $request->validated();
+        unset($data['password']);
+
+        if ($password = request('password')) {
+            $data['password'] = bcrypt($password);
+        }
+
+        $user->update($data);
+
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -93,6 +104,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return back();
     }
 }

@@ -12,7 +12,7 @@
         <div class="d-flex align-items-center justify-content-between">
           <h4 class="card-title">Users</h4>
 
-          <nav aria-label="breadcrumb">
+          <nav aria-label="breadcrumb" class="mb-1">
             <ol class="breadcrumb">
               <li class="breadcrumb-item">
                 <a href="{{ route('admin.index') }}">Dashboard</a>
@@ -37,7 +37,7 @@
           </div>
 
           <!-- role -->
-          <div class="form-group p-2">
+          <div class="form-group">
             <label for="role">Role</label>
             <select class="form-control" name="role">
               <option value="">All</option>
@@ -49,16 +49,11 @@
             </select>
           </div>
 
-          <div class="form-group p-2">
+          <div class="form-group">
             <label for="keyword">Keyword</label>
             <input type="text" class="form-control form-control-sm" name="keyword" value="{{ request('keyword') }}">
           </div>
 
-          <div class="form-group p-2">
-            <label for="keyword">Keyword</label>
-            <input type="text" class="form-control form-control-sm" name="keyword" value="{{ request('keyword') }}">
-          </div>
-          
           <input class="btn btn-success" type="submit" value="Search"> 
         </form>
         <!-- /.d-flex -->
@@ -88,10 +83,16 @@
                       <label class="badge badge-{{ $user->label() }}">{{ $user->roleName() }}</label>
                     </td>
                     <td class="text-right">
-                      <button class="btn btn-icons btn-light">
-                        <span class="fa fa-edit fa-lg text-primary"></span></button>
-                      <button class="btn btn-icons btn-light">
-                        <span class="fa fa-trash fa-lg text-danger"></span></button>
+                      <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-icons btn-light">
+                        <span class="fa fa-edit fa-lg text-primary"></span></a>
+
+                      <form action="{{ route('admin.users.destroy', $user) }}" method="POST" 
+                            class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-icons btn-light" onclick="return confirm('Are You Sure');">
+                          <span class="fa fa-trash fa-lg text-danger"></span></button>
+                      </form>
                     </td>
                   </tr>
                   @endforeach

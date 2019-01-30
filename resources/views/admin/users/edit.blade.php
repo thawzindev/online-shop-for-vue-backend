@@ -6,7 +6,7 @@
     <div class="card">
       <div class="card-body">
         <div class="d-flex align-items-center justify-content-between">
-          <h4 class="card-title">Add New User</h4>
+          <h4 class="card-title">Edit User</h4>
 
           <nav aria-label="breadcrumb" class="mb-1">
             <ol class="breadcrumb">
@@ -16,13 +16,14 @@
               <li class="breadcrumb-item">
                 <a href="{{ route('admin.users.index') }}">Users</a>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">Create</li>
+              <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
           </nav>
         </div>
 
-        <form method="POST" action="{{ route('admin.users.store') }}">
+        <form method="POST" action="{{ route('admin.users.update', $user) }}">
           @csrf
+          @method('PATCH')
 
           <fieldset>
             <!-- name -->
@@ -60,28 +61,29 @@
               @slot('title', 'Role (required)')
               @slot('name', 'role')
               @slot('objects', $roles)
-              @slot('selected', '')
+              @slot('selected', $user->role)
             @endcomponent
+            
+            @if(! $user->isUser())
+              <!-- password -->
+              @component('components.textbox')
+                @slot('type', 'password')
+                @slot('title', 'Password (required)')  
+                @slot('name', 'password')
+                @slot('placeholder', 'Enter Password')
+                @slot('value', '')
+              @endcomponent
 
-            <!-- password -->
-            @component('components.textbox')
-              @slot('type', 'password')
-              @slot('title', 'Password (required)')  
-              @slot('name', 'password')
-              @slot('placeholder', 'Enter Password')
-              @slot('value', '')
-              @slot('required', 'required')
-            @endcomponent
+              <!-- confirm password -->
+              @component('components.textbox')
+                @slot('title', 'Confirm Password (required)')  
+                @slot('name', 'password_confirmation')
+                @slot('type', 'password')
+                @slot('placeholder', 'Enter Confirm Password')
+                @slot('value', '')
+              @endcomponent
 
-            <!-- confirm password -->
-            @component('components.textbox')
-              @slot('title', 'Confirm Password (required)')  
-              @slot('name', 'password_confirmation')
-              @slot('type', 'password')
-              @slot('placeholder', 'Enter Confirm Password')
-              @slot('value', '')
-              @slot('required', 'required')
-            @endcomponent
+            @endif
 
             {{-- @component('components.textareabox')
               @slot('title', 'Address (optional)')
