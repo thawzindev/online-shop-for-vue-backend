@@ -37,7 +37,7 @@
           </div>
 
           <!-- role -->
-          <div class="form-group">
+          <div class="form-group p-2">
             <label for="role">Role</label>
             <select class="form-control" name="role">
               <option value="">All</option>
@@ -49,7 +49,12 @@
             </select>
           </div>
 
-          <div class="form-group">
+          <div class="form-group p-2">
+            <label for="keyword">Keyword</label>
+            <input type="text" class="form-control form-control-sm" name="keyword" value="{{ request('keyword') }}">
+          </div>
+
+          <div class="form-group p-2">
             <label for="keyword">Keyword</label>
             <input type="text" class="form-control form-control-sm" name="keyword" value="{{ request('keyword') }}">
           </div>
@@ -83,10 +88,10 @@
                       <label class="badge badge-{{ $user->label() }}">{{ $user->roleName() }}</label>
                     </td>
                     <td class="text-right">
-                      <button class="btn btn-light">
-                        <i class="mdi mdi-eye text-primary"></i>View </button>
-                      <button class="btn btn-light">
-                        <i class="mdi mdi-close text-danger"></i>Remove </button>
+                      <button class="btn btn-icons btn-light">
+                        <span class="fa fa-edit fa-lg text-primary"></span></button>
+                      <button class="btn btn-icons btn-light">
+                        <span class="fa fa-trash fa-lg text-danger"></span></button>
                     </td>
                   </tr>
                   @endforeach
