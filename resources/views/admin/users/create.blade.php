@@ -1,5 +1,9 @@
 @extends('admin.layouts.master')
 
+@section('plugin-css')
+ <link rel="stylesheet" href="{{ asset('assets/vendors/summernote/dist/summernote-bs4.css') }}">
+@endsection
+
 @section('container')
 <div class="row grid-margin">
   <div class="col-lg-12">
@@ -60,6 +64,7 @@
               @slot('title', 'Role (required)')
               @slot('name', 'role')
               @slot('objects', $roles)
+              @slot('objectName', 'name')
               @slot('selected', '')
             @endcomponent
 
@@ -83,11 +88,27 @@
               @slot('required', 'required')
             @endcomponent
 
-            {{-- @component('components.textareabox')
+            {{-- Using sample components --}}
+            @component('components.selectbox-with-object')
+              @slot('title', 'Ajax Select2 Sample (required)')
+              @slot('name', 'role2')
+              @slot('objectName', 'name')
+              @slot('selected', '')
+            @endcomponent
+
+            @component('components.selectbox-with-object')
+              @slot('title', 'Ajax Multiple Select2 Sample (required)')
+              @slot('name', 'role3[]')
+              @slot('objectName', 'name')
+              @slot('selected', '')
+              @slot('multiple', 'multiple')
+            @endcomponent
+
+            @component('components.textareabox')
               @slot('title', 'Address (optional)')
               @slot('name', 'address')
               @slot('value', '')
-            @endcomponent --}}
+            @endcomponent
 
             <input class="btn btn-primary" type="submit" value="Save"> 
           </fieldset>
@@ -102,6 +123,20 @@
 <!-- /.row -->
 @endsection
 
-@section('custom-js')
+@section('plugin-js')
+<script src="{{ asset('assets/vendors/summernote/dist/summernote-bs4.min.js') }}"></script>
+@endsection
 
+@section('custom-js')
+  @include('includes.select2-ajax-script', ['id' => '#role2', 'url' => route('admin.users.index')])
+  @include('includes.select2-ajax-script', ['id' => '#role3', 'url' => route('admin.users.index')])
+  <script>
+    $(function () {
+      $('#address').summernote({
+        height: 300,
+        tabsize: 1
+      });
+
+    })
+  </script>
 @endsection

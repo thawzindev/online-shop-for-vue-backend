@@ -7,7 +7,7 @@
         value="{{ $object['value'] }}"
         {{ old($name, $selected) == $object['value'] ? 'selected': '' }}
       >
-        {{ $object['name'] }}
+        {{ $object[$objectName] }}
       </option>
     @endforeach
   </select>

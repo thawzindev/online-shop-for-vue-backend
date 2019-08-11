@@ -18,6 +18,16 @@ class UserController extends Controller
      */
     public function index(UserFilter $filter)
     {
+        if (request()->expectsJson()) {
+            $name = request('q');
+            $users = User::select('id', 'name')
+                ->where('name', 'LIKE', "%{$name}%")
+                ->limit(5)
+                ->get();
+
+            return response($users);
+        }
+        
         $users = User::filter($filter)->paginate();
 
         return view('admin.users.index', compact('users'));
