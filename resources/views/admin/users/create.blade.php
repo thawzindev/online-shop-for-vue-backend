@@ -25,6 +25,8 @@
           </nav>
         </div>
 
+        @include('includes.errors')
+
         <form method="POST" action="{{ route('admin.users.store') }}">
           @csrf
 
