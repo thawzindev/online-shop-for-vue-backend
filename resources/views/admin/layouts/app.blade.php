@@ -47,6 +47,22 @@
     <!-- endinject -->
     <!-- Custom js for this page-->
     @yield('custom-js')
+
+    <!-- flash message -->
+    <script>
+        @if(session('flash'))
+          $(function () {
+            $.toast({
+              heading: 'Success',
+              text: "{{ session('flash') }}",
+              // showHideTransition: 'slide',
+              icon: 'success',
+              loaderBg: '#f96868',
+              position: 'bottom-right'
+            });
+          });
+        @endif
+    </script>  
     <!-- End custom js for this page-->
   </body>
 </html>
