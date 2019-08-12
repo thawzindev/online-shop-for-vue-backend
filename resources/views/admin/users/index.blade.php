@@ -9,8 +9,12 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <div class="d-flex align-items-center justify-content-between">
-          <h4 class="card-title">Users</h4>
+        <div class="d-flex align-items-baseline">
+          <h4 class="card-title mr-auto">Users</h4>
+          
+          <a href="{{ route('admin.users.create') }}" class="btn btn-primary btn-fw mr-2">
+            Add User
+          </a>
 
           <nav aria-label="breadcrumb" class="mb-1">
             <ol class="breadcrumb">
@@ -20,10 +24,11 @@
               <li class="breadcrumb-item active" aria-current="page">Users</li>
             </ol>
           </nav>
+
         </div>
 
         <form action="{{ route('admin.users.index') }}" method="GET" 
-              class="d-flex align-items-center justify-content-between mb-4">
+              class="d-flex align-items-center justify-content-between my-4">
 
           <!-- date -->
           <div class="form-group">
@@ -54,7 +59,7 @@
             <input type="text" class="form-control form-control-sm" name="keyword" value="{{ request('keyword') }}">
           </div>
 
-          <input class="btn btn-success" type="submit" value="Search"> 
+          <input class="btn btn-success mt-2" type="submit" value="Search"> 
         </form>
         <!-- /.d-flex -->
 
@@ -75,7 +80,7 @@
                 <tbody>
                   @foreach($users as $index => $user)
                   <tr>
-                    <td>{{ $index + 1}}</td>
+                    <td>{{ $users->firstItem() + $index }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->phone }}</td>

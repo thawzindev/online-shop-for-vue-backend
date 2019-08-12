@@ -61,6 +61,7 @@
               @slot('title', 'Role (required)')
               @slot('name', 'role')
               @slot('objects', $roles)
+              @slot('objectName', 'name')
               @slot('selected', $user->role)
             @endcomponent
             

@@ -58,7 +58,9 @@ class UserController extends Controller
 
         User::create($data);
 
-        return redirect()->route('admin.users.index');
+        return redirect()
+            ->route('admin.users.index')
+            ->with('flash', 'Create User Successfully');
     }
 
     /**
@@ -103,7 +105,9 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('admin.users.index');
+        return redirect()
+            ->route('admin.users.index')
+            ->with('flash', 'Update User Successfully');
     }
 
     /**
