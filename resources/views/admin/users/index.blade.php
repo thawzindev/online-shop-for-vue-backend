@@ -1,7 +1,11 @@
 @extends('admin.layouts.master')
 
 @section('plugin-css')
-
+<style>
+  .modal-content{
+    background: #fff !important;
+  }
+</style>
 @endsection
 
 @section ('container')
@@ -91,13 +95,9 @@
                       <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-icons btn-light">
                         <span class="fa fa-edit fa-lg text-primary"></span></a>
 
-                      <form action="{{ route('admin.users.destroy', $user) }}" method="POST" 
-                            class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-icons btn-light" onclick="return confirm('Are You Sure');">
-                          <span class="fa fa-trash fa-lg text-danger"></span></button>
-                      </form>
+                      <button type="button" class="btn btn-icons btn-light confirm-button" data-toggle="modal" data-target="#myModal" data-id="{{ $user->id }}">
+                        <span class="fa fa-trash fa-lg text-danger"></span>
+                      </button>
                     </td>
                   </tr>
                   @endforeach
@@ -117,6 +117,10 @@
         <!-- /.row -->
       </div>
       <!-- /.card-body -->
+      
+      <!-- confirm modal box -->
+      @include('components.confirm-modal', ['modal' => 'myModal', 'header' => 'Delete user', 'body' => 'Are you sure delete this user?', 'button_color' => 'danger', 'button_text' => 'Delete', 'confirm' => 'user', 'method' => 'DELETE'])
+      <!-- end confirm modal box  -->
     </div>
     <!-- /.card -->
   </div>
@@ -172,6 +176,16 @@
 
     cb(start, end); 
     /** --- end daterangepicker --- */
+
+   //modal box
+   $('.confirm-button').click(function(){
+       let user = $(this).data('id')
+       let url = "{{ route('admin.users.destroy', ':user') }}"
+       url  = url.replace(':user', user)
+
+       $('#user').attr('action', url)
+
+    })
 
   });
 </script>
