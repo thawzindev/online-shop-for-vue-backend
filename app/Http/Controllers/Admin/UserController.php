@@ -40,6 +40,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        return $data = [ {id: '12'}];
         $roles = config('form.roles');
 
         return view('admin.users.create', compact('roles'));
