@@ -31,4 +31,7 @@ Route::get('category/{id}/all-products', 'Api\ProductController@getAllProducts')
 
 Route::post('checkout', 'Api\CheckOutController@index');
 
+//blog route
+Route::get('blogs', 'Api\BlogController@index');
+Route::get('feature-blogs', 'Api\BlogController@getFeatureBlog');
 

@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        
+ 
     	$data = Product::paginate(9);
         // return response()->json(['data' => $data]);
     	return ProductResource::collection($data);
