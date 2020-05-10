@@ -13,10 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+//login route
+Route::post('login', 'Api\AuthController@login');
+	
+// Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('add-wishlist', 'Api\UserWishListController@addToWishList')->middleware('auth:sanctum');
+// });
 
 //products route
 Route::get('products', 'Api\ProductController@index');

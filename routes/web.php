@@ -20,3 +20,7 @@ Route::prefix(config('app.admin_prefix'))->group(function () // sample 'admin'
 });
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
