@@ -16,7 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('category_id');
-            $table->string('uuid');
+            $table->string('uuid'); 
             $table->string('product_name');
             $table->string('product_image');
             $table->string('department');
@@ -26,6 +26,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price', 10,2);
             $table->boolean('in_stock')->default(true);
             $table->unsignedInteger('stock');
+            $table->unsignedInteger('is_feature')->default(0);
             $table->timestamps();
         });
     }

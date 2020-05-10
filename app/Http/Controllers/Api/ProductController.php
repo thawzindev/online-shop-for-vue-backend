@@ -42,4 +42,10 @@ class ProductController extends Controller
 
         // return response()->json(['status' => false]);
     }
+
+    public function featureProducts()
+    {
+        $data = Product::where('is_feature', 1)->get();
+        return response()->json(['data' => $data], 200);
+    }
 }
