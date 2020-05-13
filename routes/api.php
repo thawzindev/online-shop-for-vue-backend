@@ -21,9 +21,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //login route
 Route::post('login', 'Api\AuthController@login');
 	
-// Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('add-wishlist', 'Api\UserWishListController@addToWishList')->middleware('auth:sanctum');
-// });
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('add-wishlist', 'Api\UserWishListController@addToWishList');
+    Route::get('wishlist', 'Api\UserWishListController@wishList');
+    Route::post('wishlist/delete', 'Api\UserWishListController@wishListDelete');
+});
 
 //products route
 Route::get('products', 'Api\ProductController@index');
