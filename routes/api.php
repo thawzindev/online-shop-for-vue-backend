@@ -43,5 +43,6 @@ Route::post('checkout', 'Api\CheckOutController@index');
 
 //blog route
 Route::get('blogs', 'Api\BlogController@index');
+Route::get('blog/{id}', 'Api\BlogController@detail');
 Route::get('feature-blogs', 'Api\BlogController@getFeatureBlog');
 
