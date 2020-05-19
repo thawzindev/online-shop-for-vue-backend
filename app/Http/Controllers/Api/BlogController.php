@@ -17,7 +17,7 @@ class BlogController extends Controller
 
     public function getFeatureBlog()
     {
-    	$data = Blog::where('status', 1)->where('is_feature', 1)->get();
+    	$data = Blog::where('status', 1)->where('is_feature', 1)->take(3)->get();
     	return response()->json(['data' => $data], 200);
     }
 
@@ -25,5 +25,11 @@ class BlogController extends Controller
     {
         $data = Blog::find($id);
         return response()->json($data);
+    }
+
+    public function suggestBlog()
+    {
+        $data = Blog::latest()->take(3)->get();
+        return response()->json(['data' => $data], 200);
     }
 }
