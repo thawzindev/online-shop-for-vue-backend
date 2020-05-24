@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Hash;
+use Carbon\Carbon;
 use App\User;
 use App\UserWishList;
 use Validator;
@@ -13,6 +14,7 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
+        
     	$validator = Validator::make($request->all(), [
             'phone' => 'required',
             'password' => 'required',
@@ -36,7 +38,9 @@ class AuthController extends Controller
 
         if ($check) {
         	$token = $user->createToken('user-token');
-			$user->token = $token->plainTextToken;
+            $expire_at = Carbon::now()->addDays(1);
+			$user['token'] = $token->plainTextToken;
+            $user['expire_at'] = $expire_at; 
 			return response()->json($user,200);
         }
 
